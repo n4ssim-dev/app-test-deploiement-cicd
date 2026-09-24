@@ -44,7 +44,8 @@
               "buildTarget": "deployment-demo-frontend:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {}
         },
         "test": {
           "builder": "@angular/build:unit-test",

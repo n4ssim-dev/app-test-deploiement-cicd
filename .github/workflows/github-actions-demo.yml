@@ -24,6 +24,9 @@ jobs:
 
   frontend-tests:
     runs-on: ubuntu-latest
+    env:
+      # Injecté au build par @ngx-env ; sans lui, le bundle plante au chargement.
+      NG_APP_API_URL: http://localhost:3000/api
     defaults:
       run:
         working-directory: frontend
