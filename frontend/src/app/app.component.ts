@@ -11,8 +11,8 @@ import { ApiService, InfoResponse } from './services/api.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  username = 'alice';
-  password = 'password';
+  username = '';
+  password = '';
   loading = false;
   error = '';
   info: InfoResponse | null = null;
