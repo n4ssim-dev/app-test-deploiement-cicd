@@ -1,13 +1,30 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const users = require('./data/users.json');
 const { getTrainingInfo } = require('./services/info.service');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-// Volontairement permissif pour l'exercice.
-app.use(cors());
+const allowedOrigins = (process.env.CORS_ORIGINS || '')
+  .split(',')
+  .map(o => o.trim())
+  .filter(Boolean);
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // Accepte les requêtes sans origine (curl, Postman, appels serveur à serveur)
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    callback(new Error(`Origine non autorisée par CORS : ${origin}`));
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+app.use(express.json());
 app.use(express.json());
 
 app.get('/api/health', (req, res) => {
@@ -46,5 +63,5 @@ app.get('/api/info', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Backend démarré sur http://localhost:${PORT}`);
+  console.log(`Backend démarré sur le port :${PORT}`);
 });
