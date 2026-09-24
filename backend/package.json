@@ -7,11 +7,15 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
+    "dev:docker": "nodemon -L src/server.js",
     "test": "node --test"
   },
   "dependencies": {
     "cors": "^2.8.6",
     "dotenv": "^18.0.3",
     "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
   }
 }
