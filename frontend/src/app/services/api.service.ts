@@ -24,7 +24,8 @@ export interface InfoResponse {
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   // Volontairement codé en dur : fonctionne en local, posera problème au déploiement.
-  private readonly apiUrl = 'http://localhost:3000/api';
+ 
+  private readonly apiUrl = import.meta.env.NG_APP_API_URL;
 
   constructor(private readonly http: HttpClient) {}
 
