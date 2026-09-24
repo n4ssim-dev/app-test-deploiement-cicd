@@ -7,3 +7,5 @@ problèmes notés :
 - pas de pipeline de déploiement défini
 - pas de tests pour le front
 - le test backend check simplement une fonction, pas de check des routes
+- aucune sécurité (return de tout l'objet user en dur, token facilement crackable... )
+- dist/ possiblement à enlever du .gitignore pour le déploiement
