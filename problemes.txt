@@ -1,0 +1,9 @@
+problèmes notés :
+
+- url de l'api hardcodé dans le front (api.service.ts)
+- url du back hardcodé sans recours au process.env (server.js)
+- pas d'exemples d'.env
+- pas de dockerfile/compose
+- pas de pipeline de déploiement défini
+- pas de tests pour le front
+- le test backend check simplement une fonction, pas de check des routes
