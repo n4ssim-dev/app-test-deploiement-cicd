@@ -2,7 +2,7 @@ name: GitHub Actions Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on:
   push:
-  pull_request:
+    branches: [main]
 
 jobs:
   backend-tests:
@@ -25,7 +25,6 @@ jobs:
   frontend-tests:
     runs-on: ubuntu-latest
     env:
-      # Injecté au build par @ngx-env ; sans lui, le bundle plante au chargement.
       NG_APP_API_URL: http://localhost:3000/api
     defaults:
       run:
@@ -44,10 +43,7 @@ jobs:
       - run: npm run build
 
   docker:
-    # Uniquement après des tests verts, et seulement sur un push vers main
-    # (jamais sur une PR : les secrets n'y sont pas exposés aux forks).
     needs: [backend-tests, frontend-tests]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -72,9 +68,8 @@ jobs:
           context: ${{ matrix.context }}
           file: ${{ matrix.context }}/Dockerfile.prod
           push: true
-          # Ignoré par le backend ; figé dans le bundle Angular pour le front.
           build-args: |
-            NG_APP_API_URL=${{ vars.NG_APP_API_URL || 'http://localhost:3000/api' }}
+            NG_APP_API_URL=${{ vars.NG_APP_API_URL || '/api' }}
           tags: |
             ${{ vars.DOCKERHUB_USERNAME }}/test-ci-cd:${{ matrix.service }}-latest
             ${{ vars.DOCKERHUB_USERNAME }}/test-ci-cd:${{ matrix.service }}-${{ github.sha }}
