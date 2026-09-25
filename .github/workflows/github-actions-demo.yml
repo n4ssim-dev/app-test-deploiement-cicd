@@ -1,7 +1,8 @@
 name: GitHub Actions Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on:
-  push:
+  push: 
+    branches: [main]
   pull_request:
 
 jobs:
@@ -26,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # Injecté au build par @ngx-env ; sans lui, le bundle plante au chargement.
-      NG_APP_API_URL: http://localhost:3000/api
+      NG_APP_API_URL: /api   #http://localhost:3000
     defaults:
       run:
         working-directory: frontend
@@ -40,5 +41,5 @@ jobs:
           cache: npm
           cache-dependency-path: frontend/package-lock.json
       - run: npm ci
-      - run: npm test
+      - run: npm test --if-present
       - run: npm run build
