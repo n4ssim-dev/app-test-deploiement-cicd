@@ -4,7 +4,7 @@ on:
   push: 
     branches: [main]
   pull_request:
-
+    branches: [main]
 jobs:
   backend-tests:
     runs-on: ubuntu-latest
@@ -43,3 +43,4 @@ jobs:
       - run: npm ci
       - run: npm test --if-present
       - run: npm run build
+      - run: echo "::notice::Front construit avec NG_APP_API_URL=$NG_APP_API_URL"
